@@ -6,10 +6,18 @@ from django.db import models
 class Player(models.Model):
     name = models.CharField(max_length=30)
 
+    def __unicode__(self):
+        return self.name
+
 
 class League(models.Model):
     name = models.CharField(max_length=255)
+    num_of_sets = models.PositiveSmallIntegerField(default=2)
+    points_per_set = models.PositiveSmallIntegerField(default=6)
     players = models.ManyToManyField(Player)
+
+    def __unicode__(self):
+        return self.name
 
 
 class LeagueRound(models.Model):

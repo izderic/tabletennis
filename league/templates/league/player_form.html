@@ -1,0 +1,9 @@
+{% extends "league/base.html" %}
+
+{% block content %}
+    <form method="post" class="form-horizontal" role="form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+{% endblock content %}
