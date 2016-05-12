@@ -3,7 +3,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 
-from .models import Player
+from .models import Player, League
 
 
 class HomeView(TemplateView):
@@ -11,6 +11,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
+        context['page_title'] = "Home"
         return context
 
 
@@ -53,4 +54,46 @@ class PlayerDeleteView(DeleteView):
     def get_context_data(self, **kwargs):
         context = super(PlayerDeleteView, self).get_context_data(**kwargs)
         context['page_title'] = "Delete Player"
+        return context
+
+
+class LeagueListView(ListView):
+    model = League
+
+    def get_context_data(self, **kwargs):
+        context = super(LeagueListView, self).get_context_data(**kwargs)
+        context['page_title'] = "Leagues"
+        return context
+
+
+class LeagueCreateView(CreateView):
+    model = League
+    fields = ['name', 'num_of_sets', 'points_per_set', 'players']
+    success_url = reverse_lazy('league_leagues')
+
+    def get_context_data(self, **kwargs):
+        context = super(LeagueCreateView, self).get_context_data(**kwargs)
+        context['page_title'] = "Create League"
+        return context
+
+
+class LeagueUpdateView(UpdateView):
+    model = League
+    fields = ['name', 'num_of_sets', 'points_per_set', 'players']
+    success_url = reverse_lazy('league_leagues')
+
+    def get_context_data(self, **kwargs):
+        context = super(LeagueUpdateView, self).get_context_data(**kwargs)
+        context['page_title'] = "Edit League"
+        return context
+
+
+class LeagueDeleteView(DeleteView):
+    model = League
+    success_url = reverse_lazy('league_leagues')
+    template_name = "league/confirm_delete.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(LeagueDeleteView, self).get_context_data(**kwargs)
+        context['page_title'] = "Delete League"
         return context

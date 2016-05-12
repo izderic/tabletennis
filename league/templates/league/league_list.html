@@ -1,0 +1,39 @@
+{% extends 'league/base.html' %}
+
+{% block content %}
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Number of sets</th>
+            <th>Points per set</th>
+            <th>Players</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in object_list %}
+            <tr>
+                <td>{{ item }}</td>
+                <td>{{ item.num_of_sets }}</td>
+                <td>{{ item.points_per_set }}</td>
+                <td>
+                    {% for player in item.players.all %}
+                        {{ player }}
+                    {% endfor %}
+                </td>
+                <td><a href="{% url "league_league_update" pk=item.pk %}">
+                    <button type="button">Edit</button>
+                </a></td>
+                <td><a href="{% url "league_league_delete" pk=item.pk %}">
+                    <button type="button">Delete</button>
+                </a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url "league_league_create" %}">
+        <button type="button">Create League</button>
+    </a>
+{% endblock content %}
