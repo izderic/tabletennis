@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 
 from .models import Player, League
+from .forms import LeagueForm
 
 
 class HomeView(TemplateView):
@@ -59,6 +60,10 @@ class PlayerDeleteView(DeleteView):
 class LeagueListView(ListView):
     model = League
 
+    def get_queryset(self):
+        queryset = super(LeagueListView, self).get_queryset()
+        return queryset.prefetch_related('players')
+
     def get_context_data(self, **kwargs):
         context = super(LeagueListView, self).get_context_data(**kwargs)
         context['page_title'] = "Leagues"
@@ -67,7 +72,7 @@ class LeagueListView(ListView):
 
 class LeagueCreateView(CreateView):
     model = League
-    fields = ['name', 'num_of_sets', 'points_per_set', 'players']
+    form_class = LeagueForm
     success_url = reverse_lazy('league_leagues')
 
     def get_context_data(self, **kwargs):
@@ -78,7 +83,7 @@ class LeagueCreateView(CreateView):
 
 class LeagueUpdateView(UpdateView):
     model = League
-    fields = ['name', 'num_of_sets', 'points_per_set', 'players']
+    form_class = LeagueForm
     success_url = reverse_lazy('league_leagues')
 
     def get_context_data(self, **kwargs):

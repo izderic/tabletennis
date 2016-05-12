@@ -1,11 +1,6 @@
 {% extends "league/base.html" %}
 
 {% block content %}
-    <style>
-        #id_players {
-            height: 100px;
-        }
-    </style>
     <form method="post" class="form-horizontal" role="form">
         {% csrf_token %}
         {{ form.as_p }}
