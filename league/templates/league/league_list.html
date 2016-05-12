@@ -34,6 +34,9 @@
     </table>
 
     <a href="{% url "league_league_create" %}">
-        <button type="button">Create League</button>
+        <button type="button" class="button-primary">Create League</button>
+        <a href="{% url "home" %}">
+            <button type="button">Back</button>
+        </a>
     </a>
 {% endblock content %}

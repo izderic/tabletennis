@@ -24,6 +24,9 @@
     </table>
 
     <a href="{% url "league_player_create" %}">
-        <button type="button">Create Player</button>
+        <button type="button" class="button-primary">Create Player</button>
+        <a href="{% url "home" %}">
+            <button type="button">Back</button>
+        </a>
     </a>
 {% endblock content %}

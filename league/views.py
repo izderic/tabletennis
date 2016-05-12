@@ -49,7 +49,6 @@ class PlayerUpdateView(UpdateView):
 class PlayerDeleteView(DeleteView):
     model = Player
     success_url = reverse_lazy('league_players')
-    template_name = "league/confirm_delete.html"
 
     def get_context_data(self, **kwargs):
         context = super(PlayerDeleteView, self).get_context_data(**kwargs)
@@ -91,7 +90,6 @@ class LeagueUpdateView(UpdateView):
 class LeagueDeleteView(DeleteView):
     model = League
     success_url = reverse_lazy('league_leagues')
-    template_name = "league/confirm_delete.html"
 
     def get_context_data(self, **kwargs):
         context = super(LeagueDeleteView, self).get_context_data(**kwargs)
