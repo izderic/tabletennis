@@ -5,6 +5,9 @@
         <thead>
         <tr>
             <th>Name</th>
+            <th>Number of sets</th>
+            <th>Points per set</th>
+            <th>Players</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -12,10 +15,17 @@
         {% for item in object_list %}
             <tr>
                 <td>{{ item }}</td>
-                <td><a href="{% url "league_player_update" pk=item.pk %}">
+                <td>{{ item.num_of_sets }}</td>
+                <td>{{ item.points_per_set }}</td>
+                <td>
+                    {% for player in item.players.all %}
+                        {{ player }}
+                    {% endfor %}
+                </td>
+                <td><a href="{% url "league_league_update" pk=item.pk %}">
                     <button type="button">Edit</button>
                 </a></td>
-                <td><a href="{% url "league_player_delete" pk=item.pk %}">
+                <td><a href="{% url "league_league_delete" pk=item.pk %}">
                     <button type="button">Delete</button>
                 </a></td>
             </tr>
@@ -23,8 +33,8 @@
         </tbody>
     </table>
 
-    <a href="{% url "league_player_create" %}">
-        <button type="button" class="button-primary">Create Player</button>
+    <a href="{% url "league_league_create" %}">
+        <button type="button" class="button-primary">Create League</button>
         <a href="{% url "home" %}">
             <button type="button">Back</button>
         </a>

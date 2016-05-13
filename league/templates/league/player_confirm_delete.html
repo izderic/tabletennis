@@ -1,10 +1,9 @@
 {% extends "league/base.html" %}
 
 {% block content %}
-    <form method="post" class="form-horizontal" role="form">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="button-primary">Save</button>
+    <form action="" method="post">{% csrf_token %}
+        <p>Are you sure you want to delete "{{ object }}"?</p>
+        <input type="submit" value="Confirm" class="button-primary" />
         <a href="{% url "league_players" %}">
             <button type="button">Back</button>
         </a>
