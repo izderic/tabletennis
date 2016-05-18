@@ -1,0 +1,17 @@
+.ng-invalid.ng-dirty {
+    border-color: red;
+}
+
+.ng-valid.ng-dirty {
+    border-color: green;
+}
+
+.errorlist {
+    color: #a94442;
+    list-style: none;
+}
+
+#id_players {
+    height: 300px;
+    width: 300px;
+}

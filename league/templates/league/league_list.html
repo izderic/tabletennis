@@ -28,6 +28,9 @@
                 <td><a href="{% url "league_league_delete" pk=item.pk %}">
                     <button type="button">Delete</button>
                 </a></td>
+                <td><a href="{% url "league_matches" pk=item.pk %}">
+                    <button type="button">Matches</button>
+                </a></td>
             </tr>
         {% endfor %}
         </tbody>

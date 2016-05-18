@@ -1,10 +1,16 @@
-from django.views.generic.base import TemplateView
+import json
+
+from django.views.generic.base import TemplateView, View
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponseRedirect, JsonResponse
 
-from .models import Player, League
+from rest_framework import viewsets
+
+from .models import Player, League, Match, Set, LeagueRound
 from .forms import LeagueForm
+from .serializers import PlayerSerializer, LeagueSerializer, MatchSerializer, SetSerializer, RoundSerializer
 
 
 class HomeView(TemplateView):
@@ -80,6 +86,10 @@ class LeagueCreateView(CreateView):
         context['page_title'] = "Create League"
         return context
 
+    def form_valid(self, form):
+        form.save(players=form.cleaned_data.get('players'))
+        return HttpResponseRedirect(reverse_lazy('league_leagues'))
+
 
 class LeagueUpdateView(UpdateView):
     model = League
@@ -100,3 +110,67 @@ class LeagueDeleteView(DeleteView):
         context = super(LeagueDeleteView, self).get_context_data(**kwargs)
         context['page_title'] = "Delete League"
         return context
+
+
+class MatchesView(TemplateView):
+    template_name = 'league/matches.html'
+
+    def get_context_data(self, **kwargs):
+        league_id = kwargs.pop('pk', None)
+        context = super(MatchesView, self).get_context_data(**kwargs)
+        context['page_title'] = "Matches"
+
+        matches_queryset = Match.objects.filter(league_round__league=league_id).select_related()
+        rounds = []
+
+        rounds_dict = {}
+        for match in matches_queryset:
+            match_list = rounds_dict.get(match.league_round, [])
+            match_list.append(match)
+            rounds_dict[match.league_round] = match_list
+
+            if match.league_round not in rounds:
+                rounds.append(match.league_round)
+
+        matches = []
+        for item in rounds:
+            matches.append(rounds_dict[item])
+
+        context['rounds'] = zip(rounds, matches)
+        return context
+
+
+class MainView(TemplateView):
+    template_name = 'main.html'
+
+
+class PlayerViewSet(viewsets.ModelViewSet):
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
+
+
+class LeagueViewSet(viewsets.ModelViewSet):
+    queryset = League.objects.all()
+    serializer_class = LeagueSerializer
+
+
+class MatchViewSet(viewsets.ModelViewSet):
+
+    queryset = Match.objects.all()
+    serializer_class = MatchSerializer
+
+
+class SetViewSet(viewsets.ModelViewSet):
+    queryset = Set.objects.all()
+    serializer_class = SetSerializer
+
+
+class RoundViewSet(viewsets.ModelViewSet):
+
+    queryset = LeagueRound.objects.all()
+    serializer_class = RoundSerializer
+
+    # Optimize queries
+    def get_queryset(self):
+        rounds = LeagueRound.objects.all().prefetch_related('matches').prefetch_related('matches__sets')
+        return rounds

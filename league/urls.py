@@ -1,9 +1,10 @@
-"""
-Defines urls for current app
-"""
 from django.conf.urls import url
 
-from .views import PlayerListView, PlayerCreateView, PlayerUpdateView, PlayerDeleteView, LeagueListView, LeagueCreateView, LeagueUpdateView, LeagueDeleteView
+from .views import (
+    PlayerListView, PlayerCreateView, PlayerUpdateView, PlayerDeleteView,
+    LeagueListView, LeagueCreateView, LeagueUpdateView, LeagueDeleteView,
+    MatchesView
+    )
 
 urlpatterns = [
     # Player urls
@@ -15,5 +16,7 @@ urlpatterns = [
     url(r'^leagues/', LeagueListView.as_view(), name='league_leagues'),
     url(r'^league/create/', LeagueCreateView.as_view(), name='league_league_create'),
     url(r'^league/update/(?P<pk>\d+)/$', LeagueUpdateView.as_view(), name='league_league_update'),
-    url(r'^league/delete/(?P<pk>\d+)/$', LeagueDeleteView.as_view(), name='league_league_delete')
+    url(r'^league/delete/(?P<pk>\d+)/$', LeagueDeleteView.as_view(), name='league_league_delete'),
+
+    url(r'^matches/(?P<pk>\d+)/$', MatchesView.as_view(), name='league_matches')
 ]

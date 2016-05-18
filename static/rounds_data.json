@@ -1,0 +1,72 @@
+[
+    {
+        "name": "Round 1",
+        "matches": [
+            {
+                "home_player": "Ivan",
+                "away_player": "Josip",
+                "sets": [
+                    {
+                        "home_player_score": 6,
+                        "away_player_score": 4
+                    },
+                    {
+                        "home_player_score": 6,
+                        "away_player_score": 3
+                    }
+                ]
+            },
+            {
+                "home_player": "Petar",
+                "away_player": "Tomislav",
+                "sets": [
+                    {
+                        "home_player_score": 6,
+                        "away_player_score": 3
+                    },
+                    {
+                        "home_player_score": 1,
+                        "away_player_score": 6
+                    },
+                    {
+                        "home_player_score": 6,
+                        "away_player_score": 4
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "Round 2",
+        "matches": [
+            {
+                "home_player": "Ivan",
+                "away_player": "Tomislav",
+                "sets": [
+                    {
+                        "home_player_score": 2,
+                        "away_player_score": 6
+                    },
+                    {
+                        "home_player_score": 3,
+                        "away_player_score": 6
+                    }
+                ]
+            },
+            {
+                "home_player": "Josip",
+                "away_player": "Petar",
+                "sets": [
+                    {
+                        "home_player_score": 6,
+                        "away_player_score": 4
+                    },
+                    {
+                        "home_player_score": 6,
+                        "away_player_score": 0
+                    }
+                ]
+            }
+        ]
+    }
+]
