@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import collections
 
 from django.db import models, transaction
+from .managers import LeagueManager, LeagueRoundManager, MatchManager, SetManager
 
 
 class Player(models.Model):
@@ -15,7 +16,8 @@ class League(models.Model):
     name = models.CharField(max_length=255)
     num_of_sets = models.PositiveSmallIntegerField(default=2)
     points_per_set = models.PositiveSmallIntegerField(default=6)
-    players = models.ManyToManyField(Player)
+    players = models.ManyToManyField(Player, related_name='leagues')
+    objects = LeagueManager()
 
     def __unicode__(self):
         return self.name
@@ -78,9 +80,10 @@ class League(models.Model):
 class LeagueRound(models.Model):
     league = models.ForeignKey(League)
     number = models.PositiveSmallIntegerField()
+    objects = LeagueRoundManager()
 
     def __unicode__(self):
-        return 'Round %d' % self.number
+        return '%s - Round %d' % (self.league, self.number)
 
 
 class Match(models.Model):
@@ -88,13 +91,20 @@ class Match(models.Model):
     home_player = models.ForeignKey(Player, related_name='home_player')
     away_player = models.ForeignKey(Player, related_name='away_player')
     winner = models.ForeignKey(Player, related_name='winner', null=True)
+    objects = MatchManager()
+
+    class Meta:
+        verbose_name_plural = "matches"
 
     def __unicode__(self):
-        return '%s %s' % (self.home_player.name, self.away_player.name)
+        return '%s: %s - %s' % (self.league_round.league, self.home_player.name, self.away_player.name)
 
 
 class Set(models.Model):
     match = models.ForeignKey(Match, related_name='sets')
     home_player_score = models.PositiveSmallIntegerField()
     away_player_score = models.PositiveSmallIntegerField()
-    number = models.PositiveSmallIntegerField()
+    objects = SetManager()
+
+    def __unicode__(self):
+        return '%s: Set %d: %d - %d' % (self.match, self.number, self.home_player_score, self.away_player_score)

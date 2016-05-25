@@ -18,21 +18,21 @@ from django.contrib import admin
 
 from rest_framework import routers
 
-from league.views import HomeView, MainView, PlayerViewSet, LeagueViewSet, MatchViewSet, SetViewSet, RoundViewSet
+from league.views import MainView
+from league.viewsets import PlayerViewSet, LeagueViewSet, RoundViewSet, MatchViewSet, SetViewSet
 
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'players', PlayerViewSet)
 router.register(r'leagues', LeagueViewSet)
+router.register(r'rounds', RoundViewSet)
 router.register(r'matches', MatchViewSet)
 router.register(r'sets', SetViewSet)
-router.register(r'rounds', RoundViewSet)
+
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', HomeView.as_view(), name='home'),
-    #url(r'^$', MainView.as_view(), name='main'),
-    url(r'^league/', include('league.urls')),
+    url(r'^.*$', MainView.as_view(), name='main'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

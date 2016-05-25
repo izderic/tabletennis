@@ -1,9 +1,11 @@
 .ng-invalid.ng-dirty {
     border-color: red;
+    border-width: 3px;
 }
 
 .ng-valid.ng-dirty {
     border-color: green;
+    border-width: 3px;
 }
 
 .errorlist {
@@ -14,4 +16,18 @@
 #id_players {
     height: 300px;
     width: 300px;
+}
+
+.set-score {
+    width: 70px;
+}
+
+.alert-success {
+    background-color: #affcae;
+    padding: 10px;
+    margin-bottom: 30px;
+    border-style: solid;
+    border-color: #00a100;
+    border-width: 1px;
+    border-radius: 5px;
 }

@@ -5,7 +5,7 @@ from .models import Player, League, Match, Set, LeagueRound
 class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
-        fields = ('id', 'name')
+        fields = '__all__'
 
 
 class LeagueSerializer(serializers.ModelSerializer):
@@ -57,9 +57,44 @@ class SetSerializer(serializers.ModelSerializer):
 
 class MatchSerializer(serializers.ModelSerializer):
     sets = SetSerializer(many=True)
+    home_player = serializers.StringRelatedField()
+    away_player = serializers.StringRelatedField()
+
     class Meta:
         model = Match
         fields = '__all__'
+        depth = 2
+
+    def update(self, instance, validated_data):
+
+        instance.sets.all().delete()
+
+        home = 0
+        away = 0
+
+        for item in validated_data['sets']:
+
+            home_player_score = item['home_player_score']
+            away_player_score = item['away_player_score']
+
+            Set.objects.create(
+                home_player_score=home_player_score,
+                away_player_score=away_player_score,
+                match=instance
+            )
+            if home_player_score > away_player_score:
+                home += 1
+            else:
+                away += 1
+
+        if home > away:
+            instance.winner = instance.home_player
+        elif home < away:
+            instance.winner = instance.away_player
+
+        instance.save()
+
+        return instance
 
 
 class RoundSerializer(serializers.ModelSerializer):

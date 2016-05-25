@@ -1,0 +1,27 @@
+<h4><b>{{ match.home_player }} : {{ match.away_player }}</b></h4>
+<h5>{{ match.league_round.league.name }} - Round {{ match.league_round.number }}</h5>
+
+<div ng-show="success" class="alert-success" ng-click="success=false"><b>Successfully saved!</b> (Click to hide)</div>
+
+<form ng-submit="submit(match)" name="matchForm">
+    <div ng-repeat="set in match.sets">
+        <ng-form name="form">
+            <input name="home_player_score" type="number" class="set-score" ng-model="set.home_player_score" required min="0"/> :
+            <input home-score="set.home_player_score" match="match" name="away_player_score" type="number" class="set-score" ng-model="set.away_player_score"
+                   required min="0"/>
+            <button type="button" ng-click="removeSet(set)">Remove</button>
+            <span ng-show="form.home_player_score.$touched && form.home_player_score.$error.required">Home player score is required.</span>
+            <span ng-show="form.away_player_score.$touched && form.away_player_score.$error.required">Away player score is required.</span>
+            <span ng-show="form.away_player_score.$invalid">Incorrect result</span>
+        </ng-form>
+    </div>
+    <button type="button" ng-click="addSet(match.id)">Add Set</button>
+    <button type="submit" class="button-primary" ng-disabled="matchForm.$invalid" ng-click="loading=true" style="width: 120px;">
+        <span ng-hide="loading">Save</span>
+        <span ng-show="loading">Saving...<i class="fa fa-spinner fa-spin fa-lg"></i></span>
+    </button>
+</form>
+
+<a href="/matches/{{ match.league_round.league.id }}">
+    <button type="button">Back</button>
+</a>
