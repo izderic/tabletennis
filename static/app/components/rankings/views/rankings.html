@@ -1,0 +1,20 @@
+<h2>Table</h2>
+    <table>
+        <thead>
+            <th>Player</th>
+            <th>Matches played</th>
+            <th>Won</th>
+            <th>Lost</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="ranking in rankings">
+            <td>{{ ranking.player }}</td>
+            <td>{{ ranking.matches_played }}</td>
+            <td>{{ ranking.matches_won }}</td>
+            <td>{{ ranking.matches_lost }}</td>
+        </tr>
+        </tbody>
+    </table>
+<a href="/leagues">
+    <button type="button">Back</button>
+</a>

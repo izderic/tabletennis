@@ -1,5 +1,6 @@
 var app = angular.module('LeagueApp', [
-    'ngRoute', 'ngResource', 'homeController', 'playerController', 'playerFactories', 'leagueController', 'leagueFactories', 'matchesController', 'matchDirectives'
+    'ngRoute', 'ngResource', 'homeController', 'playerController', 'playerFactories', 'leagueController', 'leagueFactories', 'matchesController',
+    'matchDirectives', 'rankingsController'
 ]);
 
 app.config(function ($routeProvider, $locationProvider) {
@@ -47,6 +48,10 @@ app.config(function ($routeProvider, $locationProvider) {
         .when('/match/:id', {
             controller: 'MatchController',
             templateUrl: '/static/app/components/matches/views/match.html'
+        })
+        .when('/rankings/:id', {
+            controller: 'RankingsController',
+            templateUrl: '/static/app/components/rankings/views/rankings.html'
         })
         .otherwise({
             redirectTo: '/'

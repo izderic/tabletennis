@@ -18,7 +18,7 @@ from django.contrib import admin
 
 from rest_framework import routers
 
-from league.views import MainView
+from league.views import MainView, RankingList
 from league.viewsets import PlayerViewSet, LeagueViewSet, RoundViewSet, MatchViewSet, SetViewSet
 
 
@@ -32,6 +32,7 @@ router.register(r'sets', SetViewSet)
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
+    url(r'^api/rankings', RankingList.as_view()),
     url(r'^admin/', admin.site.urls),
     url(r'^.*$', MainView.as_view(), name='main'),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
