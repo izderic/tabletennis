@@ -1,0 +1,17 @@
+<h2>Create Player</h2>
+<form ng-submit="save()" novalidate name="playerForm">
+    <p>
+        <label for="id_name">Name:</label>
+        <input maxlength="30" name="name" type="text" ng-model="player.name">
+
+    <span ng-show="errors.name">
+        <ul class="errorlist">
+            <li ng-repeat="error in errors.name">{{ error }}</li>
+        </ul>
+    </span>
+    </p>
+    <button type="submit" class="button-primary">Save</button>
+    <a href="/players">
+        <button type="button">Back</button>
+    </a>
+</form>

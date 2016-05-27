@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html ng-app="LeagueApp">
+<head>
+    <title>Table Tennis</title>
+    <base href="/">
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+    <link href="{% static 'css/normalize.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/skeleton.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" type="text/css"/>
+    <script src="{% static "js/angular.min.js" %}"></script>
+    <script src="{% static "js/angular-route.min.js" %}"></script>
+    <script src="{% static "js/angular-resource.min.js" %}"></script>
+    <script src="{% static "app/app.js" %}"></script>
+    <script src="{% static "app/components/home/homeController.js" %}"></script>
+    <script src="{% static "app/components/player/playerController.js" %}"></script>
+    <script src="{% static "app/components/player/playerFactories.js" %}"></script>
+    <script src="{% static "app/components/league/leagueController.js" %}"></script>
+    <script src="{% static "app/components/league/leagueFactories.js" %}"></script>
+    <script src="{% static "app/components/matches/matchesController.js" %}"></script>
+    <script src="{% static "app/components/matches/matchesFactories.js" %}"></script>
+    <script src="{% static "app/components/rankings/rankingsController.js" %}"></script>
+    <script src="{% static "app/components/rankings/rankingsFactories.js" %}"></script>
+    <script src="{% static "app/shared/match/matchDirectives.js" %}"></script>
+</head>
+<body>
+<div class="container">
+    <div ng-view></div>
+</div>
+</body>
+</html>

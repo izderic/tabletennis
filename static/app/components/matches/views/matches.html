@@ -1,0 +1,30 @@
+<h2>Matches</h2>
+<div ng-repeat="round in rounds">
+    <h5>Round {{ round.number }}</h5>
+    <table class="round-table">
+        <thead>
+        </thead>
+        <tbody>
+        <tr ng-repeat="match in round.matches">
+            <td>{{ match.home_player }}</td>
+            <td>{{ match.away_player }}</td>
+            <td>
+                <span ng-repeat="set in match.sets">
+                    <strong ng-if="set.home_player_score > set.away_player_score">{{ set.home_player_score }}</strong>
+                    <span ng-if="set.home_player_score < set.away_player_score">{{ set.home_player_score }}</span>
+                     -
+                    <strong ng-if="set.home_player_score < set.away_player_score">{{ set.away_player_score }}</strong>
+                    <span ng-if="set.home_player_score > set.away_player_score">{{ set.away_player_score }}</span>
+                    &nbsp;&nbsp;
+                </span>
+            </td>
+            <td><a href="/match/{{ match.id }}">
+                <button type="button">Edit</button>
+            </a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<a href="/leagues">
+    <button type="button">Back</button>
+</a>

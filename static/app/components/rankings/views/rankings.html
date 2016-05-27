@@ -1,0 +1,26 @@
+<h2>{{ league.name }}</h2>
+    <table id="ranking">
+        <thead>
+            <th>Position</th>
+            <th>Player</th>
+            <th>Matches played</th>
+            <th>Won</th>
+            <th>Lost</th>
+            <th>Sets Won</th>
+            <th>Sets Lost</th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="ranking in rankings" ng-class="getClass($index)">
+            <td>{{ $index + 1 }}</td>
+            <td>{{ ranking.player }}</td>
+            <td>{{ ranking.matches_played }}</td>
+            <td>{{ ranking.matches_won }}</td>
+            <td>{{ ranking.matches_lost }}</td>
+            <td>{{ ranking.sets_won }}</td>
+            <td>{{ ranking.sets_lost }}</td>
+        </tr>
+        </tbody>
+    </table>
+<a href="/leagues">
+    <button type="button">Back</button>
+</a>

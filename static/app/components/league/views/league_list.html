@@ -1,0 +1,45 @@
+<h2>Leagues</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Number of sets</th>
+        <th>Points per set</th>
+        <th>Players</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="league in leagues">
+        <td>{{ league.name }}</td>
+        <td>{{ league.num_of_sets }}</td>
+        <td>{{ league.points_per_set }}</td>
+        <td><span ng-repeat="player in league.players">{{ player.name }} </span></td>
+        <td>
+            <div class="tooltip"><a href="/league/update/{{ league.id }}">
+                <button type="button" class="button-primary"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></button>
+                <span class="tooltiptext">Edit League</span>
+            </a></div>
+            <div class="tooltip"><a href="/league/delete/{{ league.id }}">
+                <button type="button"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button>
+                <span class="tooltiptext">Delete League</span>
+            </a></div>
+            <div class="tooltip"><a href="/matches/{{ league.id }}">
+                <button type="button"><i class="fa fa-list fa-lg" aria-hidden="true"></i></button>
+                <span class="tooltiptext">Matches</span>
+            </a></div>
+            <div class="tooltip"><a href="/rankings/{{ league.id }}">
+                <button type="button"><i class="fa fa-table fa-lg" aria-hidden="true"></i></button>
+                <span class="tooltiptext">Standings</span>
+            </a></div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/league/create">
+    <button type="button" class="button-primary">Create League</button>
+</a>
+<a href="/">
+    <button type="button">Back</button>
+</a>
