@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from .models import Player, League, LeagueRound, Match, Set
-from .serializers import PlayerSerializer, LeagueSerializer, MatchSerializer, SetSerializer, RoundSerializer
+from .models import Player, League, LeagueRound, Match, Set, Ranking
+from .serializers import PlayerSerializer, LeagueSerializer, MatchSerializer, SetSerializer, RoundSerializer, RankingSerializer
 
 
 class PlayerViewSet(viewsets.ModelViewSet):
@@ -34,3 +34,16 @@ class MatchViewSet(viewsets.ModelViewSet):
 class SetViewSet(viewsets.ModelViewSet):
     queryset = Set.objects.all()
     serializer_class = SetSerializer
+
+
+class RankingViewSet(viewsets.ModelViewSet):
+    queryset = Ranking.objects.all()
+    serializer_class = RankingSerializer
+
+    def get_queryset(self):
+        rankings = super(RankingViewSet, self).get_queryset()
+        league = self.request.query_params.get('league')
+        if league:
+            rankings = rankings.filter(league=league)
+        rankings = rankings.order_by('-matches_won')
+        return rankings

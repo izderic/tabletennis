@@ -1,6 +1,6 @@
 var app = angular.module('LeagueApp', [
     'ngRoute', 'ngResource', 'homeController', 'playerController', 'playerFactories', 'leagueController', 'leagueFactories', 'matchesController',
-    'matchDirectives', 'rankingsController'
+    'matchDirectives', 'rankingsController', 'matchesFactories', 'rankingsFactories'
 ]);
 
 app.config(function ($routeProvider, $locationProvider) {

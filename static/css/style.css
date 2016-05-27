@@ -22,14 +22,39 @@
     width: 70px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+}
+
+.round-table th, .round-table td {
+    padding: 7px 0 0 10px!important;
+}
+
+#ranking th, #ranking td {
+    padding: 10px!important;
+}
+
+.first {
+    background-color: #96bacf;
+}
+
+.second {
+    background-color: #aed5ea;
+}
+
+.third {
+    background-color: #cff1f9;
+}
+
+/* Alert success */
 .alert-success {
-    background-color: #affcae;
+    background-color: #DCFFDC;
     padding: 10px;
     margin-bottom: 30px;
     border-style: solid;
     border-color: #00a100;
     border-width: 1px;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 
@@ -77,4 +102,20 @@
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+
+
+/* Link box */
+a.box:link, a.box:visited {
+    background-color: #00264c;
+    color: white;
+    padding: 40px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+a.box:hover, a.box:active {
+    background-color: lightblue;
 }

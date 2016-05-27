@@ -1,7 +1,8 @@
-var playerFactories = angular.module('playerFactories', []);
+var rankingsFactories = angular.module('rankingsFactories', []);
 
-playerFactories.factory('Player', function ($resource) {
-    return $resource('/api/players/:id', { id: '@id' }, {
+
+rankingsFactories.factory('Ranking', function ($resource) {
+    return $resource('/api/rankings/:id', { id: '@id' }, {
         'create': {
             method: 'POST',
             headers: {

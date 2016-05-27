@@ -21,3 +21,8 @@ class MatchManager(Manager):
 class SetManager(Manager):
     def get_queryset(self):
         return super(SetManager, self).get_queryset().select_related('match__league_round__league', 'match__home_player', 'match__away_player')
+
+
+class RankingManager(Manager):
+    def get_queryset(self):
+        return super(RankingManager, self).get_queryset().select_related('player', 'league')

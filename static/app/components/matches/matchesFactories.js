@@ -1,7 +1,8 @@
-var playerFactories = angular.module('playerFactories', []);
+var matchesFactories = angular.module('matchesFactories', []);
 
-playerFactories.factory('Player', function ($resource) {
-    return $resource('/api/players/:id', { id: '@id' }, {
+
+matchesFactories.factory('Match', function ($resource) {
+    return $resource('/api/matches/:id', { id: '@id' }, {
         'create': {
             method: 'POST',
             headers: {

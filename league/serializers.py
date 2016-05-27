@@ -1,5 +1,6 @@
+from django.db import transaction
 from rest_framework import serializers
-from .models import Player, League, Match, Set, LeagueRound
+from .models import Player, League, Match, Set, LeagueRound, Ranking
 
 
 class PlayerSerializer(serializers.ModelSerializer):
@@ -27,6 +28,7 @@ class LeagueSerializer(serializers.ModelSerializer):
         for player in validated_data['players']:
             names.append(player['name'])
 
+        # TODO: Remove filtering by name
         players = Player.objects.filter(name__in=names)
         league.save(players=players)
 
@@ -44,6 +46,7 @@ class LeagueSerializer(serializers.ModelSerializer):
             names.append(player['name'])
 
         instance.save()
+        # TODO: Remove filtering by name
         instance.players = list(Player.objects.filter(name__in=names))
 
         return instance
@@ -65,8 +68,11 @@ class MatchSerializer(serializers.ModelSerializer):
         fields = '__all__'
         depth = 2
 
+    @transaction.atomic
     def update(self, instance, validated_data):
         instance.update_match(validated_data)
+        instance.update_rankings()
+
         return instance
 
 
@@ -77,8 +83,8 @@ class RoundSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class RankingSerializer(serializers.Serializer):
-    player = serializers.CharField(max_length=255)
-    matches_played = serializers.IntegerField()
-    matches_won = serializers.IntegerField()
-    matches_lost = serializers.IntegerField()
+class RankingSerializer(serializers.ModelSerializer):
+    player = serializers.StringRelatedField()
+    class Meta:
+        model = Ranking
+        fields = '__all__'
