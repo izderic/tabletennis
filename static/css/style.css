@@ -1,16 +1,20 @@
 .ng-invalid.ng-dirty {
-    border-color: red;
+    border-color: #ca2028;
     border-width: 3px;
 }
 
 .ng-valid.ng-dirty {
-    border-color: green;
+    border-color: #358035;
     border-width: 3px;
 }
 
 .errorlist {
-    color: #a94442;
+    color: #ca2028;
     list-style: none;
+}
+
+.error-message {
+    color: #ca2028;
 }
 
 a:link {

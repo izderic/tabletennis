@@ -14,7 +14,7 @@ class Player(models.Model):
 
 
 class League(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, unique=True)
     num_of_sets = models.PositiveSmallIntegerField(default=2)
     points_per_set = models.PositiveSmallIntegerField(default=6)
     players = models.ManyToManyField(Player, related_name='leagues')
@@ -29,10 +29,19 @@ class League(models.Model):
         create = not self.pk
         super(League, self).save(**kwargs)
 
-        if create and players:
+        if create or not self.has_started:
+            self.rounds.all().delete()
+            self.rankings.all().delete()
             rounds = self._build_rounds(list(players.values_list('pk', flat=True)))
             self._create_rounds(rounds)
             self._create_rankings(players)
+
+    @property
+    def has_started(self):
+        """
+        The league started if there are sets saved.
+        """
+        return Set.objects.filter(match__league_round__league=self).exists()
 
     def _create_rounds(self, rounds):
         for index, league_round in enumerate(rounds, start=1):
@@ -181,7 +190,7 @@ class Set(models.Model):
     objects = SetManager()
 
     def __unicode__(self):
-        return '%s: Set %d: %d - %d' % (self.match, self.number, self.home_player_score, self.away_player_score)
+        return '%s: Set %d - %d' % (self.match, self.home_player_score, self.away_player_score)
 
 
 class Ranking(models.Model):

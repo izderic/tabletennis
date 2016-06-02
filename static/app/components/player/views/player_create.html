@@ -4,7 +4,7 @@
     <div class="row">
         <label for="id_name">Name:</label>
         <input maxlength="30" name="name" type="text" ng-model="player.name" required>
-        <span ng-show="playerForm.name.$touched && playerForm.name.$error.required">This field is required.</span>
+        <span ng-show="playerForm.name.$touched && playerForm.name.$error.required" class="error-message">This field is required.</span>
 
         <span ng-show="errors.name">
             <ul class="errorlist">

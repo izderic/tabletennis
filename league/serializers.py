@@ -4,9 +4,11 @@ from .models import Player, League, Match, Set, LeagueRound, Ranking
 
 
 class PlayerSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=False)
+
     class Meta:
         model = Player
-        fields = '__all__'
+        fields = ('id', 'name',)
 
     def validate(self, attrs):
         instance = self.instance
@@ -26,39 +28,48 @@ class LeagueSerializer(serializers.ModelSerializer):
         model = League
         fields = '__all__'
 
+    def validate(self, attrs):
+        instance = self.instance
+
+        if len(attrs['players']) < 2:
+            raise serializers.ValidationError('At least two players are required.')
+
+        self._validate_if_changed(instance, attrs)
+        return attrs
+
     def create(self, validated_data):
-        league = League(
-            name=validated_data['name'],
-            num_of_sets=validated_data['num_of_sets'],
-            points_per_set=validated_data['points_per_set']
-        )
-
-        names = []
-        for player in validated_data['players']:
-            names.append(player['name'])
-
-        # TODO: Remove filtering by name
-        players = Player.objects.filter(name__in=names)
-        league.save(players=players)
-
-        league.players = list(players)
-
-        return league
+        instance = League()
+        self._save_instance(instance, validated_data)
+        return instance
 
     def update(self, instance, validated_data):
+        self._save_instance(instance, validated_data)
+        return instance
+
+    def _save_instance(self, instance, validated_data):
         instance.name=validated_data['name']
         instance.num_of_sets=validated_data['num_of_sets']
         instance.points_per_set=validated_data['points_per_set']
+        players = Player.objects.filter(pk__in=[player['id'] for player in validated_data['players']])
+        instance.save(players=players)
+        instance.players.set(list(players))
 
-        names = []
-        for player in validated_data['players']:
-            names.append(player['name'])
-
-        instance.save()
-        # TODO: Remove filtering by name
-        instance.players = list(Player.objects.filter(name__in=names))
-
-        return instance
+    def _validate_if_changed(self, instance, attrs):
+        if instance and instance.has_started:
+            error = False
+            if attrs['name'] != instance.name:
+                error = True
+            elif attrs['num_of_sets'] != instance.num_of_sets:
+                error = True
+            elif attrs['points_per_set'] != instance.points_per_set:
+                error = True
+            else:
+                existing = instance.players.all().values_list('id', flat=True)
+                new = [item['id'] for item in attrs['players']]
+                if set(new) != set(existing):
+                    error = True
+            if error:
+                raise serializers.ValidationError('The league cannot be changed after it starts.')
 
 
 class SetSerializer(serializers.ModelSerializer):

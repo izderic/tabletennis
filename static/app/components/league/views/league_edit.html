@@ -1,49 +1,35 @@
 <h2>Edit League</h2>
+
+<div ng-show="errors.non_field_errors" class="alert-error">
+    <span ng-repeat="error in errors.non_field_errors">{{ error }}</span>
+</div>
+
 <form ng-submit="save()" novalidate name="leagueForm">
-
-    <p>
+    <div class="row">
         <label for="id_name">Name:</label>
-        <input id="id_name" maxlength="255" name="name" type="text" ng-model="league.name">
-        <span ng-show="errors.name">
-        <ul class="errorlist">
-            <li ng-repeat="error in errors.name">{{ error }}</li>
-        </ul>
-    </span>
-    </p>
-
-    <p>
+        <input id="id_name" maxlength="255" name="name" type="text" ng-model="league.name" required>
+        <span ng-show="leagueForm.name.$touched && leagueForm.name.$error.required" class="error-message">This field is required.</span>
+    </div>
+    <div class="row">
         <label for="id_num_of_sets">Num of sets:</label>
-        <input id="id_num_of_sets" min="0" name="num_of_sets" type="number" value="2" ng-model="league.num_of_sets">
-        <span ng-show="errors.num_of_sets">
-        <ul class="errorlist">
-            <li ng-repeat="error in errors.num_of_sets">{{ error }}</li>
-        </ul>
-    </span>
-    </p>
-
-    <p>
+        <input id="id_num_of_sets" min="0" name="num_of_sets" type="number" ng-model="league.num_of_sets" required>
+        <span ng-show="leagueForm.num_of_sets.$touched && leagueForm.num_of_sets.$error.required" class="error-message">This field is required.</span>
+    </div>
+    <div class="row">
         <label for="id_points_per_set">Points per set:</label>
-        <input id="id_points_per_set" min="0" name="points_per_set" type="number" value="6" ng-model="league.points_per_set">
-        <span ng-show="errors.points_per_set">
-        <ul class="errorlist">
-            <li ng-repeat="error in errors.points_per_set">{{ error }}</li>
-        </ul>
-    </span>
-    </p>
-
-    <p>
+        <input id="id_points_per_set" min="0" name="points_per_set" type="number" ng-model="league.points_per_set" required>
+        <span ng-show="leagueForm.points_per_set.$touched && leagueForm.points_per_set.$error.required" class="error-message">This field is required.</span>
+    </div>
+    <div class="row">
         <label for="id_players">Players:</label>
         <select multiple="multiple" id="id_players" name="players" ng-model="league.players"
-                ng-options="item as item.name for item in availablePlayers track by item.id">
-        </select> <span class="helptext"><br><i>Hold the Ctrl key to select multiple players.</i></span>
-        <span ng-show="errors.players">
-        <ul class="errorlist">
-            <li ng-repeat="error in errors.players">{{ error }}</li>
-        </ul>
-    </span>
-    </p>
+                ng-options="item as item.name for item in availablePlayers track by item.id" required>
+        </select>
+        <span ng-show="leagueForm.players.$touched && leagueForm.players.$error.required" class="error-message">This field is required.</span>
+        <span class="helptext"><br><i>Hold the Ctrl key to select multiple players.</i></span>
+    </div>
 
-    <button type="submit" class="button-primary">Save</button>
+    <button type="submit" class="button-primary" ng-disabled="leagueForm.$invalid">Save</button>
     <a href="/leagues">
         <button type="button">Back</button>
     </a>
