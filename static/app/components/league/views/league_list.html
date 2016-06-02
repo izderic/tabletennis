@@ -17,20 +17,20 @@
         <td><span ng-repeat="player in league.players">{{ player.name }} </span></td>
         <td>
             <div class="tooltip"><a href="/league/update/{{ league.id }}">
-                <button type="button" class="button-primary"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></button>
-                <span class="tooltiptext">Edit League</span>
+                <button type="button"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i></button>
+                <span class="tooltiptext">Edit {{ league.name }}</span>
             </a></div>
             <div class="tooltip"><a href="/league/delete/{{ league.id }}">
                 <button type="button"><i class="fa fa-trash-o fa-lg" aria-hidden="true"></i></button>
-                <span class="tooltiptext">Delete League</span>
+                <span class="tooltiptext">Delete {{ league.name }}</span>
             </a></div>
             <div class="tooltip"><a href="/matches/{{ league.id }}">
                 <button type="button"><i class="fa fa-list fa-lg" aria-hidden="true"></i></button>
-                <span class="tooltiptext">Matches</span>
+                <span class="tooltiptext">{{ league.name }} Matches</span>
             </a></div>
             <div class="tooltip"><a href="/rankings/{{ league.id }}">
                 <button type="button"><i class="fa fa-table fa-lg" aria-hidden="true"></i></button>
-                <span class="tooltiptext">Standings</span>
+                <span class="tooltiptext">{{ league.name }} Standings</span>
             </a></div>
         </td>
     </tr>

@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 import collections
+import random
 
 from django.db import models, transaction
 from .managers import LeagueManager, LeagueRoundManager, MatchManager, SetManager, RankingManager
@@ -66,6 +67,8 @@ class League(models.Model):
 
     def _build_rounds(self, player_id_list):
         rounds = []
+
+        random.shuffle(player_id_list)
 
         if len(player_id_list) % 2 == 1:
             player_id_list.append('x')
@@ -147,16 +150,19 @@ class Match(models.Model):
         self._update_player_ranking(away_player, league)
 
     def _update_player_ranking(self, player, league):
-        player_matches = player.home_matches.filter(league_round__league=league) | \
-                         player.away_matches.filter(league_round__league=league)
+        matches_won, matches_lost = self._calculate_won_lost(player, league)
+        ranking = Ranking.objects.get(player=player, league=league)
+        ranking.matches_won = matches_won
+        ranking.matches_lost = matches_lost
+        ranking.matches_played = matches_won + matches_lost
+        ranking.save()
 
-        player_ranking = Ranking.objects.get(
-            player=player,
-            league=league
-        )
-
+    def _calculate_won_lost(self, player, league):
         matches_won = 0
         matches_lost = 0
+        home_matches = player.home_matches.filter(league_round__league=league)
+        away_matches = player.away_matches.filter(league_round__league=league)
+        player_matches = home_matches | away_matches
 
         for match in player_matches:
             if match.winner:
@@ -165,10 +171,7 @@ class Match(models.Model):
                 else:
                     matches_lost += 1
 
-        player_ranking.matches_won = matches_won
-        player_ranking.matches_lost = matches_lost
-        player_ranking.matches_played = matches_won + matches_lost
-        player_ranking.save()
+        return matches_won, matches_lost
 
 
 class Set(models.Model):

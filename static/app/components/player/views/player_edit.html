@@ -1,16 +1,23 @@
 <h2>Edit Player</h2>
-<form ng-submit="save()" novalidate name="playerForm">
-    <p>
-        <label for="id_name">Name:</label>
-        <input maxlength="30" name="name" type="text" ng-model="player.name">
 
-    <span ng-show="errors.name">
-        <ul class="errorlist">
-            <li ng-repeat="error in errors.name">{{ error }}</li>
-        </ul>
-    </span>
-    </p>
-    <button type="submit" class="button-primary">Save</button>
+<div ng-show="errors.non_field_errors" class="alert-error">
+    <span ng-repeat="error in errors.non_field_errors">{{ error }}</span>
+</div>
+
+<form ng-submit="save()" novalidate name="playerForm">
+    <div class="row">
+        <label for="id_name">Name:</label>
+        <input maxlength="30" name="name" type="text" ng-model="player.name" required>
+        <span ng-show="playerForm.name.$touched && playerForm.name.$error.required">This field is required.</span>
+
+        <span ng-show="errors.name">
+            <ul class="errorlist">
+                <li ng-repeat="error in errors.name">{{ error }}</li>
+            </ul>
+        </span>
+    </div>
+
+    <button type="submit" class="button-primary" ng-disabled="playerForm.$invalid">Save</button>
     <a href="/players">
         <button type="button">Back</button>
     </a>

@@ -13,6 +13,10 @@
     list-style: none;
 }
 
+a:link {
+    text-decoration: none;
+}
+
 #id_players {
     height: 300px;
     width: 300px;
@@ -53,6 +57,17 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 30px;
     border-style: solid;
     border-color: #00a100;
+    border-width: 1px;
+    border-radius: 3px;
+}
+
+/* Alert error */
+.alert-error {
+    background-color: #ffc8cd;
+    padding: 10px;
+    margin-bottom: 30px;
+    border-style: solid;
+    border-color: #a80007;
     border-width: 1px;
     border-radius: 3px;
 }
@@ -109,13 +124,16 @@ h1, h2, h3, h4, h5, h6 {
 a.box:link, a.box:visited {
     background-color: #00264c;
     color: white;
-    padding: 40px 25px;
+    padding: 50px 50px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     border-radius: 5px;
+    margin-right: 20px;
+    font-size: large;
+    text-transform: uppercase;
 }
 
 a.box:hover, a.box:active {
-    background-color: lightblue;
+    background-color: #004293;
 }

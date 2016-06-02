@@ -8,6 +8,15 @@ class PlayerSerializer(serializers.ModelSerializer):
         model = Player
         fields = '__all__'
 
+    def validate(self, attrs):
+        instance = self.instance
+        if instance:
+            leagues = [league.name for league in League.objects.filter(players=instance)]
+            if attrs['name'] != instance.name and leagues:
+                raise serializers.ValidationError('Cannot change player name because the player is member of the following leagues: %s.' % ', '.join(leagues))
+
+        return attrs
+
 
 class LeagueSerializer(serializers.ModelSerializer):
 
