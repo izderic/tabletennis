@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from rest_framework import status
+from rest_framework.response import Response
 
 from .models import Player, League, LeagueRound, Match, Set, Ranking
 from .serializers import PlayerSerializer, LeagueSerializer, MatchSerializer, SetSerializer, RoundSerializer, RankingSerializer
@@ -12,6 +14,24 @@ class PlayerViewSet(viewsets.ModelViewSet):
 class LeagueViewSet(viewsets.ModelViewSet):
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
+
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(data=data)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def update(self, request, *args, **kwargs):
+        data = request.data
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        serializer.validate_players(data)
+        serializer.save(data=data)
+        return Response(serializer.data)
 
 
 class RoundViewSet(viewsets.ModelViewSet):
@@ -45,5 +65,5 @@ class RankingViewSet(viewsets.ModelViewSet):
         league = self.request.query_params.get('league')
         if league:
             rankings = rankings.filter(league=league)
-        rankings = rankings.order_by('-matches_won')
+        rankings = rankings.order_by('-matches_won', '-set_difference', '-point_difference')
         return rankings

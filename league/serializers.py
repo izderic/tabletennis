@@ -4,8 +4,6 @@ from .models import Player, League, Match, Set, LeagueRound, Ranking
 
 
 class PlayerSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=False)
-
     class Meta:
         model = Player
         fields = ('id', 'name',)
@@ -21,30 +19,21 @@ class PlayerSerializer(serializers.ModelSerializer):
 
 
 class LeagueSerializer(serializers.ModelSerializer):
-
-    players = PlayerSerializer(many=True)
+    players = PlayerSerializer(many=True, read_only=True)
 
     class Meta:
         model = League
         fields = '__all__'
 
-    def validate(self, attrs):
-        instance = self.instance
+    def validate_players(self, data):
+        self._validate_if_changed(self.instance, data)
+        if len(data['players']) < 2:
+            raise serializers.ValidationError({'non_field_errors': ['At least two players are required.']})
 
-        if len(attrs['players']) < 2:
-            raise serializers.ValidationError('At least two players are required.')
-
-        self._validate_if_changed(instance, attrs)
-        return attrs
-
-    def create(self, validated_data):
-        instance = League()
-        self._save_instance(instance, validated_data)
-        return instance
-
-    def update(self, instance, validated_data):
-        self._save_instance(instance, validated_data)
-        return instance
+    def save(self, **kwargs):
+        data = kwargs.pop('data')
+        instance = self.instance or League()
+        self._save_instance(instance, data)
 
     def _save_instance(self, instance, validated_data):
         instance.name=validated_data['name']
@@ -64,12 +53,12 @@ class LeagueSerializer(serializers.ModelSerializer):
             elif attrs['points_per_set'] != instance.points_per_set:
                 error = True
             else:
-                existing = instance.players.all().values_list('id', flat=True)
-                new = [item['id'] for item in attrs['players']]
+                existing = instance.players.all().values_list('name', flat=True)
+                new = [item['name'] for item in attrs['players']]
                 if set(new) != set(existing):
                     error = True
             if error:
-                raise serializers.ValidationError('The league cannot be changed after it starts.')
+                raise serializers.ValidationError({'non_field_errors': ['The league cannot be changed after it starts.']})
 
 
 class SetSerializer(serializers.ModelSerializer):
@@ -98,6 +87,7 @@ class MatchSerializer(serializers.ModelSerializer):
 
 class RoundSerializer(serializers.ModelSerializer):
     matches = MatchSerializer(many=True)
+
     class Meta:
         model = LeagueRound
         fields = '__all__'
@@ -105,6 +95,7 @@ class RoundSerializer(serializers.ModelSerializer):
 
 class RankingSerializer(serializers.ModelSerializer):
     player = serializers.StringRelatedField()
+
     class Meta:
         model = Ranking
         fields = '__all__'

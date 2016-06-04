@@ -42,17 +42,15 @@ h1, h2, h3, h4, h5, h6 {
     padding: 10px!important;
 }
 
-.first {
-    background-color: #96bacf;
+#ranking, #ranking th, #ranking td {
+    border: 1px solid #dcdcdc;
 }
 
-.second {
-    background-color: #aed5ea;
+#ranking th {
+    background-color: lightyellow;
+    text-align: center;
 }
 
-.third {
-    background-color: #cff1f9;
-}
 
 /* Alert success */
 .alert-success {
@@ -91,7 +89,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #fff;
     text-align: center;
     padding: 5px 0;
-    border-radius: 6px;
+    border-radius: 3px;
 
     /* Position the tooltip text */
     position: absolute;
