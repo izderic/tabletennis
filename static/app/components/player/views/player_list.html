@@ -9,12 +9,14 @@
     <tbody>
     <tr ng-repeat="player in players">
         <td>{{ player.name }}</td>
-        <td><a href="/player/update/{{ player.id }}">
-            <button type="button">Edit</button>
-        </a></td>
-        <td><a href="/player/delete/{{ player.id }}">
-            <button type="button">Delete</button>
-        </a></td>
+        <td>
+            <a href="/player/update/{{ player.id }}">
+                <button type="button">Edit</button>
+            </a>
+            <a href="/player/delete/{{ player.id }}">
+                <button type="button">Delete</button>
+            </a>
+        </td>
     </tr>
     </tbody>
 </table>

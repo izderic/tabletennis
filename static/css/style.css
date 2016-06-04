@@ -1,16 +1,24 @@
 .ng-invalid.ng-dirty {
-    border-color: red;
+    border-color: #ca2028;
     border-width: 3px;
 }
 
 .ng-valid.ng-dirty {
-    border-color: green;
+    border-color: #358035;
     border-width: 3px;
 }
 
 .errorlist {
-    color: #a94442;
+    color: #ca2028;
     list-style: none;
+}
+
+.error-message {
+    color: #ca2028;
+}
+
+a:link {
+    text-decoration: none;
 }
 
 #id_players {
@@ -34,17 +42,15 @@ h1, h2, h3, h4, h5, h6 {
     padding: 10px!important;
 }
 
-.first {
-    background-color: #96bacf;
+#ranking, #ranking th, #ranking td {
+    border: 1px solid #dcdcdc;
 }
 
-.second {
-    background-color: #aed5ea;
+#ranking th {
+    background-color: lightyellow;
+    text-align: center;
 }
 
-.third {
-    background-color: #cff1f9;
-}
 
 /* Alert success */
 .alert-success {
@@ -53,6 +59,17 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 30px;
     border-style: solid;
     border-color: #00a100;
+    border-width: 1px;
+    border-radius: 3px;
+}
+
+/* Alert error */
+.alert-error {
+    background-color: #ffc8cd;
+    padding: 10px;
+    margin-bottom: 30px;
+    border-style: solid;
+    border-color: #a80007;
     border-width: 1px;
     border-radius: 3px;
 }
@@ -72,7 +89,7 @@ h1, h2, h3, h4, h5, h6 {
     color: #fff;
     text-align: center;
     padding: 5px 0;
-    border-radius: 6px;
+    border-radius: 3px;
 
     /* Position the tooltip text */
     position: absolute;
@@ -109,13 +126,16 @@ h1, h2, h3, h4, h5, h6 {
 a.box:link, a.box:visited {
     background-color: #00264c;
     color: white;
-    padding: 40px 25px;
+    padding: 50px 50px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     border-radius: 5px;
+    margin-right: 20px;
+    font-size: large;
+    text-transform: uppercase;
 }
 
 a.box:hover, a.box:active {
-    background-color: lightblue;
+    background-color: #004293;
 }

@@ -6,7 +6,7 @@
 <form ng-submit="submit(match)" name="matchForm">
     <div ng-repeat="set in match.sets">
         <ng-form name="form">
-            <input name="home_player_score" type="number" class="set-score" ng-model="set.home_player_score" required min="0"/> :
+            <input name="home_player_score" type="number" class="set-score" ng-model="set.home_player_score" required min="0"/> -
             <input home-score="set.home_player_score" match="match" name="away_player_score" type="number" class="set-score" ng-model="set.away_player_score"
                    required min="0"/>
             <button type="button" ng-click="removeSet(set)">Remove</button>
@@ -24,4 +24,7 @@
 
 <a href="/matches/{{ match.league_round.league.id }}">
     <button type="button">Back</button>
+</a>
+<a href="/rankings/{{ match.league_round.league.id }}">
+    <button type="button">Standings</button>
 </a>
