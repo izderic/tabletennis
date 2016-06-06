@@ -33,6 +33,29 @@ matchesController.controller('MatchController', function ($scope, $http, $routeP
             function (error) {
                 $scope.errors = error.data;
             });
-    }
+    };
+
+    $scope.isValid = function(match) {
+        var home = 0;
+        var away = 0;
+        var sets = match.sets;
+
+        if (!sets)
+            return true;
+
+        var numOfSets = match.league_round.league.num_of_sets;
+
+        for (var i=0; i<sets.length; i++) {
+            var homePlayerScore = sets[i].home_player_score;
+            var awayPlayerScore = sets[i].away_player_score;
+
+            if (homePlayerScore > awayPlayerScore)
+                home += 1;
+            else
+                away += 1;
+        }
+
+        return home == numOfSets && away < numOfSets || home < numOfSets && away == numOfSets || home < numOfSets && away < numOfSets;
+    };
 
 });

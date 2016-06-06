@@ -17,7 +17,7 @@
         </ng-form>
     </div>
     <button type="button" ng-click="addSet(match.id)">Add Set</button>
-    <button type="submit" class="button-primary" ng-disabled="matchForm.$invalid" ng-click="loading=true" style="width: 120px;">
+    <button type="submit" class="button-primary" ng-disabled="matchForm.$invalid || !isValid(match)" ng-click="loading=true" style="width: 120px;">
         <span ng-hide="loading">Save</span>
         <span ng-show="loading">Saving...<i class="fa fa-spinner fa-spin fa-lg"></i></span>
     </button>

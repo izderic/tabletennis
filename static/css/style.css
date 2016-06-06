@@ -17,6 +17,12 @@
     color: #ca2028;
 }
 
+.button-primary:disabled, .button-primary:disabled:hover {
+    background-color: #ebebeb;
+    color: #b8b8b8;
+    border-color: #ebebeb;
+}
+
 a:link {
     text-decoration: none;
 }
