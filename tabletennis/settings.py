@@ -78,10 +78,21 @@ WSGI_APPLICATION = 'tabletennis.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'dc9mr6b7t24mkb',
+        'USER': 'bghzvndsiwqxmz',
+        'PASSWORD': 'X-YXVYHf7oH0MahIaPAlegL4z9',
+        'HOST': 'ec2-54-247-185-241.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
