@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #ranking th {
-    background-color: lightyellow;
+    background-color: #e8ffff;
     text-align: center;
 }
 
@@ -137,5 +137,5 @@ a.box:link, a.box:visited {
 }
 
 a.box:hover, a.box:active {
-    background-color: #004293;
+    background-color: #8a9597;
 }

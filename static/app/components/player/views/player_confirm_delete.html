@@ -1,7 +1,10 @@
 <h2>Delete Player</h2>
 <form ng-submit="remove()">
     <p>Are you sure you want to delete "{{ player.name }}"?</p>
-    <input type="submit" value="Confirm" class="button-primary"/>
+    <button type="submit" class="button-primary" ng-disabled="playerForm.$invalid" ng-click="loading=true">
+        <span ng-hide="loading">Confirm</span>
+        <span ng-show="loading">Deleting...<i class="fa fa-spinner fa-spin fa-lg"></i></span>
+    </button>
     <a href="/players">
         <button type="button">Back</button>
     </a>

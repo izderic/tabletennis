@@ -29,7 +29,11 @@
         <span class="helptext"><br><i>Hold the Ctrl key to select multiple players.</i></span>
     </div>
 
-    <button type="submit" class="button-primary" ng-disabled="leagueForm.$invalid">Save</button>
+    <button type="submit" class="button-primary" ng-disabled="leagueForm.$invalid" ng-click="loading=true">
+        <span ng-hide="loading">Save</span>
+        <span ng-show="loading">Saving...<i class="fa fa-spinner fa-spin fa-lg"></i></span>
+    </button>
+
     <a href="/leagues">
         <button type="button">Back</button>
     </a>
