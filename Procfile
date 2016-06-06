@@ -1,0 +1,1 @@
+web: gunicorn tabletennis.wsgi --log-file -
