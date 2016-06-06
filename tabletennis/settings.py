@@ -126,6 +126,8 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
+STATIC_ROOT = 'staticfiles'
+
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,

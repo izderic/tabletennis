@@ -11,3 +11,4 @@ develop-eggs
 compress/
 *.sqlite3
 static/bower_components
+staticfiles/
