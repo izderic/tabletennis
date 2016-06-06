@@ -17,7 +17,11 @@
         </span>
     </div>
 
-    <button type="submit" class="button-primary" ng-disabled="playerForm.$invalid">Save</button>
+    <button type="submit" class="button-primary" ng-disabled="playerForm.$invalid" ng-click="loading=true">
+        <span ng-hide="loading">Save</span>
+        <span ng-show="loading">Saving...<i class="fa fa-spinner fa-spin fa-lg"></i></span>
+    </button>
+
     <a href="/players">
         <button type="button">Back</button>
     </a>
